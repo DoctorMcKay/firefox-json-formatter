@@ -1,10 +1,15 @@
 {
 	"manifest_version": 2,
 	"name": "Basic JSON Formatter",
-	"version": "1.0.0",
+	"version": "1.0.3",
 	"description": "Adds a page action to pretty-print JSON",
+	"applications": {
+		"gecko": {
+			"id": "{c7632bd5-48ce-467d-9433-58f33477553d}"
+		}
+	},
 	"icons": {
-		"48": "icon-48.png"
+		"48": "img/icon-48.png"
 	},
 	"content_scripts": [
 		{
@@ -22,7 +27,7 @@
 	"page_action": {
 		"browser_style": true,
 		"default_icon": {
-			"48": "icon-48.png"
+			"48": "img/icon-48.png"
 		},
 		"default_title": "Format JSON"
 	}
