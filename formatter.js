@@ -1,7 +1,11 @@
 browser.runtime.onMessage.addListener(function(msg) {
 	if (msg.type == "format") {
 		try {
-			document.body.innerHTML = '<pre>' + JSON.stringify(JSON.parse(document.body.textContent), undefined, "\t") + '</pre>';
+			var pre = document.createElement('pre');
+			pre.textContent = JSON.stringify(JSON.parse(document.body.textContent), undefined, "\t");
+			var body = document.createElement('body');
+			body.appendChild(pre);
+			document.body = body;
 		} catch (ex) {
 			// whatever
 		}
