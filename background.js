@@ -1,7 +1,7 @@
 var g_Requests = {};
 
 browser.webRequest.onCompleted.addListener(function(req) {
-	if (req.frameId != 0 || !req.responseHeaders) {
+	if (req.frameId != 0 || !req.responseHeaders || req.type != "main_frame") {
 		return;
 	}
 	
