@@ -14,8 +14,8 @@ browser.runtime.onMessage.addListener(function(msg, sender, respond) {
 
 		case 'checkJson':
 			// Check if this page appears to be valid JSON
-			let body = parseBody();
-			respond(body !== null && typeof body == 'object');
+			let parsed = parseBody();
+			respond(parsed !== null && typeof parsed == 'object');
 			break;
 	}
 });
