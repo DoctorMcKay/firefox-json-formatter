@@ -1,0 +1,11 @@
+label {
+	font-size: 15px;
+	margin-left: 5px;
+	display: inline-block;
+	width: 230px;
+}
+
+select {
+	font-size: 15px;
+	width: 200px;
+}

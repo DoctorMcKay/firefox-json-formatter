@@ -3,7 +3,7 @@ browser.runtime.onMessage.addListener(function(msg, sender, respond) {
 		case 'format':
 			try {
 				let pre = document.createElement('pre');
-				pre.textContent = JSON.stringify(parseBody(), undefined, "\t");
+				pre.textContent = JSON.stringify(parseBody(), undefined, msg.indent_style || "\t");
 				let body = document.createElement('body');
 				body.appendChild(pre);
 				document.body = body;

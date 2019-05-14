@@ -21,6 +21,7 @@
 		"scripts": ["background.js"]
 	},
 	"permissions": [
+		"storage",
 		"webRequest",
 		"<all_urls>"
 	],
@@ -30,5 +31,9 @@
 			"48": "img/icon-48.png"
 		},
 		"default_title": "Format JSON"
+	},
+	"options_ui": {
+		"page": "options_ui/options.html",
+		"browser_style": true
 	}
 }

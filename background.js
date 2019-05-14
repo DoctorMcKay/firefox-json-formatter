@@ -33,8 +33,10 @@ browser.webRequest.onCompleted.addListener(function(req) {
 }, {"urls": ["<all_urls>"]}, ["responseHeaders"]);
 
 browser.pageAction.onClicked.addListener(function(tab) {
-	browser.tabs.sendMessage(tab.id, {"type": "format"});
-	browser.pageAction.hide(tab.id);
+	browser.storage.sync.get('indent_style').then((vals) => {
+		browser.tabs.sendMessage(tab.id, {"type": "format", "indent_style": vals.indent_style});
+		browser.pageAction.hide(tab.id);
+	});
 });
 
 function log(msg) {
