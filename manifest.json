@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Basic JSON Formatter",
-	"version": "1.0.6",
+	"version": "1.1.0",
 	"description": "Adds a page action to pretty-print JSON",
 	"applications": {
 		"gecko": {
