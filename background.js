@@ -11,21 +11,21 @@ chrome.runtime.onMessage.addListener(function(msg, sender, respond) {
 	setActionStatus(sender.tab.id, msg.value);
 });
 
-chrome.action.onClicked.addListener(function(tab) {
+chrome.browserAction.onClicked.addListener(function(tab) {
 	chrome.storage.sync.get('indent_style', (vals) => {
 		chrome.tabs.sendMessage(tab.id, {"type": "format", "indent_style": vals.indent_style});
 		setActionStatus(tab.id, false);
-		chrome.action.setPopup({tabId: tab.id, popup: 'popups/already_formatted.html'});
+		chrome.browserAction.setPopup({tabId: tab.id, popup: 'popups/already_formatted.html'});
 	});
 });
 
 function setActionStatus(tabId, enabled) {
 	log('Setting page action for tab ' + tabId + ' to ' + enabled);
 	
-	chrome.action.setPopup({tabId, popup: enabled ? '' : 'popups/no_json.html'});
+	chrome.browserAction.setPopup({tabId, popup: enabled ? '' : 'popups/no_json.html'});
 	
-	chrome.action.setBadgeBackgroundColor({tabId, color: '#f00'});
-	chrome.action.setBadgeText({tabId, text: enabled ? 'JSON' : ''});
+	chrome.browserAction.setBadgeBackgroundColor({tabId, color: '#f00'});
+	chrome.browserAction.setBadgeText({tabId, text: enabled ? 'JSON' : ''});
 }
 
 function log(msg) {
