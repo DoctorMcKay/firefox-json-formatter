@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "Basic JSON Formatter",
-	"version": "1.1.0",
+	"version": "2.0.0",
 	"description": "Adds a page action to pretty-print JSON",
 	"icons": {
 		"48": "img/icon-48.png",
