@@ -10,4 +10,4 @@ simply contains whitespace after formatting.
 Source for the MS Edge version is available in the [ms-edge branch](https://github.com/DoctorMcKay/firefox-json-formatter/tree/ms-edge).
 
 ## [Get it on AMO](https://addons.mozilla.org/en-US/firefox/addon/basic-json-formatter/)
-## Get it for Edge (listing pending)
+## [Get it for Edge](https://microsoftedge.microsoft.com/addons/detail/basic-json-formatter/hkcopdcafefefofahbfkpngjfoijpcgi)
