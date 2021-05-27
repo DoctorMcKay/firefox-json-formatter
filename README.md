@@ -7,3 +7,4 @@ formatter remains valid JSON that can be copied and pasted somewhere else; it si
 
 ## [Get it on AMO](https://addons.mozilla.org/en-US/firefox/addon/basic-json-formatter/)
 ## [Get it for Edge](https://microsoftedge.microsoft.com/addons/detail/basic-json-formatter/hkcopdcafefefofahbfkpngjfoijpcgi)
+## [Get it for Chrome](https://chrome.google.com/webstore/detail/basic-json-formatter/ceomfncodjlgpdebgjlbpcibgbcolfln)
