@@ -1,6 +1,6 @@
 const DEBUG = true; // controls logging
 
-chrome.runtime.onMessage.addListener(function(msg, sender, respond) {
+chrome.runtime.onMessage.addListener(async function(msg, sender, respond) {
 	respond(); // we don't need to send a response, so just do it now
 
 	if (!msg || !msg.type) {
@@ -20,10 +20,9 @@ chrome.runtime.onMessage.addListener(function(msg, sender, respond) {
 
 		case 'minifyJson':
 			// Send minify message to active tab
-			chrome.tabs.getSelected(null, ({id}) => {
-				chrome.tabs.sendMessage(id, {type: 'minify'});
-				setActionStatus(id, true);
-			});
+			let [tab] = await chrome.tabs.query({active: true, currentWindow: true});
+			chrome.tabs.sendMessage(tab.id, {type: 'minify'});
+			setActionStatus(tab.id, true);
 			break;
 
 		default:
@@ -31,21 +30,20 @@ chrome.runtime.onMessage.addListener(function(msg, sender, respond) {
 	}
 });
 
-chrome.browserAction.onClicked.addListener(function(tab) {
-	chrome.storage.sync.get('indent_style', (vals) => {
-		chrome.tabs.sendMessage(tab.id, {type: 'format', indent_style: vals.indent_style});
-		setActionStatus(tab.id, false);
-		chrome.browserAction.setPopup({tabId: tab.id, popup: 'popups/already_formatted.html'});
-	});
+chrome.action.onClicked.addListener(async function(tab) {
+	let {indent_style} = await chrome.storage.sync.get('indent_style');
+	chrome.tabs.sendMessage(tab.id, {type: 'format', indent_style});
+	setActionStatus(tab.id, false);
+	chrome.action.setPopup({tabId: tab.id, popup: 'popups/already_formatted.html'});
 });
 
 function setActionStatus(tabId, enabled) {
 	log('Setting page action for tab ' + tabId + ' to ' + enabled);
 
-	chrome.browserAction.setPopup({tabId, popup: enabled ? '' : 'popups/no_json.html'});
+	chrome.action.setPopup({tabId, popup: enabled ? '' : 'popups/no_json.html'});
 
-	chrome.browserAction.setBadgeBackgroundColor({tabId, color: '#f00'});
-	chrome.browserAction.setBadgeText({tabId, text: enabled ? 'JSON' : ''});
+	chrome.action.setBadgeBackgroundColor({tabId, color: '#f00'});
+	chrome.action.setBadgeText({tabId, text: enabled ? 'JSON' : ''});
 }
 
 function log(msg) {
