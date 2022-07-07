@@ -2,18 +2,38 @@ const DEBUG = true; // controls logging
 
 chrome.runtime.onMessage.addListener(function(msg, sender, respond) {
 	respond(); // we don't need to send a response, so just do it now
-	
-	if (!msg || !msg.type || msg.type !== 'contentScriptCheckedJson' || !sender || !sender.tab || !sender.tab.id) {
+
+	if (!msg || !msg.type) {
 		log('Ignoring message');
 		return;
 	}
-	
-	setActionStatus(sender.tab.id, msg.value);
+
+	switch (msg.type) {
+		case 'contentScriptCheckedJson':
+			if (!sender || !sender.tab || !sender.tab.id) {
+				log('Ignoring contentScriptCheckedJson because no sender tab id');
+				break;
+			}
+
+			setActionStatus(sender.tab.id, msg.value);
+			break;
+
+		case 'minifyJson':
+			// Send minify message to active tab
+			chrome.tabs.getSelected(null, ({id}) => {
+				chrome.tabs.sendMessage(id, {type: 'minify'});
+				setActionStatus(id, true);
+			});
+			break;
+
+		default:
+			log(`Ignoring message ${msg.type}`);
+	}
 });
 
 chrome.browserAction.onClicked.addListener(function(tab) {
 	chrome.storage.sync.get('indent_style', (vals) => {
-		chrome.tabs.sendMessage(tab.id, {"type": "format", "indent_style": vals.indent_style});
+		chrome.tabs.sendMessage(tab.id, {type: 'format', indent_style: vals.indent_style});
 		setActionStatus(tab.id, false);
 		chrome.browserAction.setPopup({tabId: tab.id, popup: 'popups/already_formatted.html'});
 	});
@@ -21,9 +41,9 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 
 function setActionStatus(tabId, enabled) {
 	log('Setting page action for tab ' + tabId + ' to ' + enabled);
-	
+
 	chrome.browserAction.setPopup({tabId, popup: enabled ? '' : 'popups/no_json.html'});
-	
+
 	chrome.browserAction.setBadgeBackgroundColor({tabId, color: '#f00'});
 	chrome.browserAction.setBadgeText({tabId, text: enabled ? 'JSON' : ''});
 }
