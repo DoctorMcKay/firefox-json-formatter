@@ -37,6 +37,10 @@ function setBody(contents, enableWordWrap) {
 	let pre = document.createElement('pre');
 	pre.textContent = contents;
 
+	// Override styles due to Chromium's default json formatter
+	pre.style.margin = '8px';
+	pre.style.padding = '0';
+
 	if (enableWordWrap) {
 		pre.style.wordWrap = 'break-word';
 		pre.style.whiteSpace = 'pre-wrap';
