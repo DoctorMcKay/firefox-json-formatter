@@ -44,6 +44,11 @@ function setActionStatus(tabId, enabled) {
 
 	chrome.action.setBadgeBackgroundColor({tabId, color: '#f00'});
 	chrome.action.setBadgeText({tabId, text: enabled ? 'JSON' : ''});
+
+	// setBadgeTextColor added in Chrome 110
+	if (chrome.action.setBadgeTextColor) {
+		chrome.action.setBadgeTextColor({tabId, color: '#fff'});
+	}
 }
 
 function log(msg) {
